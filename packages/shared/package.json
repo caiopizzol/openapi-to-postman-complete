@@ -1,6 +1,6 @@
 {
   "name": "@postman-enricher/shared",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Shared types and utilities for Postman Enricher",
   "type": "module",
   "main": "./dist/index.js",
