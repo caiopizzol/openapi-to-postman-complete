@@ -116,6 +116,21 @@ See [examples](./examples) for more.
 
 ## Programmatic Usage
 
+### Convert and Enrich (All-in-One)
+
+```typescript
+import { convertAndEnrich } from '@postman-enricher/core';
+
+// Convert OpenAPI to Postman and enrich in one step
+const enriched = await convertAndEnrich(
+  './api.yaml',
+  './config.yaml',
+  './existing-collection.json' // Optional: preserves IDs
+);
+```
+
+### Enrich Existing Collection
+
 ```typescript
 import { enrichCollection } from '@postman-enricher/core';
 

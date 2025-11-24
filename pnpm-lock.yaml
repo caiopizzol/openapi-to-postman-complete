@@ -81,6 +81,9 @@ importers:
       '@postman-enricher/shared':
         specifier: workspace:*
         version: link:../shared
+      openapi-to-postmanv2:
+        specifier: ^5.5.0
+        version: 5.5.0
       yaml:
         specifier: ^2.8.1
         version: 2.8.1
