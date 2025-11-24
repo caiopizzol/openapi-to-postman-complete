@@ -5,6 +5,12 @@ build/
 # Dependencies
 node_modules/
 
+# Lock files
+*-lock.*
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
 # Logs
 *.log
 
