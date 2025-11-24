@@ -1,6 +1,6 @@
 {
   "name": "openapi-to-postman-complete",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Complete OpenAPI to Postman converter with filtering, descriptions, examples, variables, and auto-generated tests",
   "keywords": [
     "openapi",
