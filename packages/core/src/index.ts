@@ -17,6 +17,8 @@ import { addTests } from './enrichers/tests.js';
 import { organizeByResources } from './enrichers/organize.js';
 import { setupPathVariables } from './enrichers/pathVariables.js';
 import { preserveIds } from './enrichers/preserveIds.js';
+// @ts-expect-error - openapi-to-postmanv2 doesn't have types
+import Converter from 'openapi-to-postmanv2';
 
 /**
  * Enrich a Postman collection with additional metadata and functionality
@@ -77,6 +79,43 @@ export function enrichCollection(
   }
 
   return enriched;
+}
+
+/**
+ * Convert OpenAPI spec to Postman collection and enrich it
+ * @param openApiPath - Path to OpenAPI spec file (YAML or JSON)
+ * @param config - Enrichment configuration (object or path to YAML file)
+ * @param existingCollectionPath - Optional path to existing collection for ID preservation
+ * @returns Promise of enriched Postman collection
+ */
+export async function convertAndEnrich(
+  openApiPath: string,
+  config: EnrichmentConfig | string = {},
+  existingCollectionPath?: string
+): Promise<PostmanCollection> {
+  const openApiSpec = readFileSync(openApiPath, 'utf8');
+
+  // Convert OpenAPI to Postman collection
+  const baseCollection = await new Promise<PostmanCollection>(
+    (resolve, reject) => {
+      Converter.convert(
+        { type: 'string', data: openApiSpec },
+        {},
+        (err: Error | null, result: any) => {
+          if (err) {
+            reject(err);
+          } else if (!result.result) {
+            reject(new Error(result.reason || 'Conversion failed'));
+          } else {
+            resolve(result.output[0].data);
+          }
+        }
+      );
+    }
+  );
+
+  // Enrich the collection
+  return enrichCollection(baseCollection, config, existingCollectionPath);
 }
 
 /**
