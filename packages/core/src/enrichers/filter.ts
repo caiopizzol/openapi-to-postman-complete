@@ -6,13 +6,13 @@ import type {
   PostmanCollection,
   PostmanItem,
   FilterConfig,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 import {
   isRequest,
   getRequestMethod,
   getUrlPath,
   shouldIncludeEndpoint,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 
 /**
  * Filter collection to only include specified endpoints

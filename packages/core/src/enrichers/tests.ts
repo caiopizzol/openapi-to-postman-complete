@@ -2,15 +2,12 @@
  * Tests enricher - Adds basic test scripts to requests
  */
 
-import type {
-  PostmanCollection,
-  TestConfig,
-} from '@openapi-to-postman-complete/shared';
+import type { PostmanCollection, TestConfig } from '@postman-enricher/shared';
 import {
   walkCollection,
   isRequest,
   getRequestMethod,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 
 /**
  * Add test scripts to requests

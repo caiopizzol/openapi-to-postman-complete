@@ -8,7 +8,7 @@ import { parse as parseYaml } from 'yaml';
 import type {
   PostmanCollection,
   EnrichmentConfig,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 import { filterEndpoints } from './enrichers/filter.js';
 import { addDescriptions } from './enrichers/descriptions.js';
 import { addExamples } from './enrichers/examples.js';

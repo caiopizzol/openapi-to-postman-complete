@@ -1,7 +1,7 @@
 {
-  "name": "@openapi-to-postman-complete/core",
+  "name": "@postman-enricher/core",
   "version": "0.0.0-development",
-  "description": "Core enrichment logic for OpenAPI to Postman Complete",
+  "description": "Core enrichment logic for Postman Enricher",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,19 +11,43 @@
       "import": "./dist/index.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openapi-to-postman-complete/shared": "workspace:*",
+    "@postman-enricher/shared": "workspace:*",
     "yaml": "^2.8.1"
   },
   "devDependencies": {
+    "@anolilab/semantic-release-pnpm": "^3.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@types/node": "^24.10.1",
+    "semantic-release": "^25.0.2",
     "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caiopizzol/openapi-to-postman-complete.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/caiopizzol/openapi-to-postman-complete/issues"
+  },
+  "homepage": "https://github.com/caiopizzol/openapi-to-postman-complete#readme",
+  "author": "Caio Pizzol",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   }
 }

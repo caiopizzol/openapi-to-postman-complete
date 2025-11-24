@@ -5,13 +5,13 @@
 import type {
   PostmanCollection,
   DescriptionConfig,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 import {
   walkCollection,
   isFolder,
   isRequest,
   getRequestMethod,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 
 /**
  * Add descriptions to collection, folders, and requests

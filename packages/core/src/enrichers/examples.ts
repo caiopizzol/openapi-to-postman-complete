@@ -6,12 +6,12 @@ import type {
   PostmanCollection,
   PostmanResponse,
   ExampleConfig,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 import {
   walkCollection,
   isRequest,
   getRequestMethod,
-} from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
 
 /**
  * Add examples to requests and responses

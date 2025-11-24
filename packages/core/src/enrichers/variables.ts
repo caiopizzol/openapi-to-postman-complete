@@ -6,8 +6,8 @@ import type {
   PostmanCollection,
   VariableConfig,
   PostmanQueryParam,
-} from '@openapi-to-postman-complete/shared';
-import { walkCollection, isRequest } from '@openapi-to-postman-complete/shared';
+} from '@postman-enricher/shared';
+import { walkCollection, isRequest } from '@postman-enricher/shared';
 
 /**
  * Setup variables in the collection

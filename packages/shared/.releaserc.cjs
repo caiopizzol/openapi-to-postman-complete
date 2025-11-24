@@ -4,7 +4,7 @@ const branch = process.env.GITHUB_REF_NAME || process.env.CI_COMMIT_BRANCH;
 
 const config = {
   branches: ['main'],
-  tagFormat: 'cli-v${version}',
+  tagFormat: 'shared-v${version}',
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
@@ -24,7 +24,7 @@ config.plugins.push([
   {
     assets: ['package.json'],
     message:
-      'chore(release): openapi-to-postman-complete ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+      'chore(release): @postman-enricher/shared ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
   },
 ]);
 
