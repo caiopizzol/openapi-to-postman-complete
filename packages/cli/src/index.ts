@@ -6,8 +6,8 @@
  */
 
 import { readFileSync, writeFileSync } from 'fs';
-import { enrichCollection } from '@openapi-to-postman-complete/core';
-import type { PostmanCollection } from '@openapi-to-postman-complete/shared';
+import { enrichCollection } from '@postman-enricher/core';
+import type { PostmanCollection } from '@postman-enricher/shared';
 // @ts-expect-error - openapi-to-postmanv2 doesn't have types
 import Converter from 'openapi-to-postmanv2';
 
