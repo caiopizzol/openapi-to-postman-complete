@@ -1,0 +1,14 @@
+# Filtered: Keep only specific endpoints
+
+filter:
+  include:
+    GET /pets: true
+    POST /pets: true
+  note: This collection includes only essential read/write endpoints
+
+variables:
+  environment:
+    baseUrl: https://api.petstore.com
+
+tests:
+  auto: true

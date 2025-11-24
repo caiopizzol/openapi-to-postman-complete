@@ -1,0 +1,2 @@
+# Ensure Git hooks remain executable across platforms
+.husky/* -text

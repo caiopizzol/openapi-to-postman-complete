@@ -1,0 +1,39 @@
+{
+  "name": "openapi-to-postman-complete",
+  "description": "Complete OpenAPI to Postman converter with filtering, descriptions, examples, variables, and auto-generated tests. Built on openapi-to-postmanv2.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "dev": "pnpm --filter @openapi-to-postman-complete/cli dev",
+    "dev:cli": "pnpm --filter @openapi-to-postman-complete/cli dev",
+    "build": "pnpm --recursive build",
+    "typecheck": "pnpm --recursive typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caiopizzol/openapi-to-postman-complete.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caiopizzol/openapi-to-postman-complete/issues"
+  },
+  "homepage": "https://github.com/caiopizzol/openapi-to-postman-complete#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+# Basic: Just add environment variables and auto-tests
+
+variables:
+  environment:
+    baseUrl: https://api.petstore.com
+    apiKey: your-api-key
+
+tests:
+  auto: true

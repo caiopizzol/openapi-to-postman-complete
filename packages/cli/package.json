@@ -1,0 +1,68 @@
+{
+  "name": "openapi-to-postman-complete",
+  "version": "0.0.0-development",
+  "description": "Complete OpenAPI to Postman converter with filtering, descriptions, examples, variables, and auto-generated tests",
+  "keywords": [
+    "openapi",
+    "postman",
+    "swagger",
+    "api",
+    "converter",
+    "collection",
+    "complete",
+    "production-ready",
+    "testing",
+    "examples",
+    "variables",
+    "rest-api",
+    "postman-collection",
+    "openapi-spec"
+  ],
+  "type": "module",
+  "bin": {
+    "openapi-to-postman-complete": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prepublish": "pnpm build"
+  },
+  "dependencies": {
+    "@openapi-to-postman-complete/core": "workspace:*",
+    "@openapi-to-postman-complete/shared": "workspace:*",
+    "openapi-to-postmanv2": "^5.5.0"
+  },
+  "devDependencies": {
+    "@anolilab/semantic-release-pnpm": "^3.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^14.1.0",
+    "@types/node": "^24.10.1",
+    "semantic-release": "^25.0.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caiopizzol/openapi-to-postman-complete.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/caiopizzol/openapi-to-postman-complete/issues"
+  },
+  "homepage": "https://github.com/caiopizzol/openapi-to-postman-complete#readme",
+  "author": "Caio Pizzol",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

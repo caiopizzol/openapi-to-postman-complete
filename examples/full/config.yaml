@@ -1,0 +1,56 @@
+# Full: All features enabled
+
+filter:
+  include:
+    GET /pets: true
+    POST /pets: true
+    GET /pets/:id: true
+    DELETE /pets/:id: true
+
+descriptions:
+  collection:
+    Pet Store API:
+      name: Pet Store - Developer Collection
+      description: Complete API for managing pets
+
+  requests:
+    List pets: Get all pets from the store
+    Create a pet: Add a new pet to the store
+    Get a pet: Get details of a specific pet by ID
+    Delete a pet: Remove a pet from the store
+
+examples:
+  responses:
+    List pets:
+      code: 200
+      body:
+        - id: '1'
+          name: Buddy
+          species: dog
+        - id: '2'
+          name: Whiskers
+          species: cat
+
+    Create a pet:
+      code: 201
+      body:
+        id: '3'
+        name: Buddy
+        species: dog
+        createdAt: '2024-01-01T00:00:00Z'
+
+variables:
+  path:
+    id: '{{petId}}'
+
+  environment:
+    baseUrl: https://api.petstore.com
+    apiKey: your-api-key
+    petId: '1'
+
+  descriptions:
+    petId: ID of the pet to fetch or modify
+    apiKey: Your API key from the developer dashboard
+
+tests:
+  auto: true
