@@ -7,6 +7,12 @@ filter:
     GET /pets/:id: true
     DELETE /pets/:id: true
 
+organize:
+  enabled: true
+  strategy: resources
+  nestingLevel: 2
+  excludePathParams: true
+
 descriptions:
   collection:
     Pet Store API:
@@ -40,17 +46,17 @@ examples:
         createdAt: '2024-01-01T00:00:00Z'
 
 variables:
-  path:
-    id: '{{petId}}'
-
   environment:
     baseUrl: https://api.petstore.com
     apiKey: your-api-key
     petId: '1'
 
-  descriptions:
-    petId: ID of the pet to fetch or modify
-    apiKey: Your API key from the developer dashboard
+pathVariables:
+  enabled: true
+  mapping:
+    id:
+      reference: '{{petId}}'
+      description: ID of the pet to fetch or modify
 
 tests:
   auto: true

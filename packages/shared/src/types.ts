@@ -143,10 +143,24 @@ export interface TestConfig {
   auto?: boolean;
 }
 
+export interface OrganizeConfig {
+  enabled: boolean;
+  strategy?: 'resources' | 'tags' | 'flat';
+  nestingLevel?: number;
+  excludePathParams?: boolean;
+}
+
+export interface PathVariablesConfig {
+  enabled: boolean;
+  mapping?: Record<string, { reference: string; description?: string }>;
+}
+
 export interface EnrichmentConfig {
   filter?: FilterConfig;
   descriptions?: DescriptionConfig;
   examples?: ExampleConfig;
   variables?: VariableConfig;
   tests?: TestConfig;
+  organize?: OrganizeConfig;
+  pathVariables?: PathVariablesConfig;
 }

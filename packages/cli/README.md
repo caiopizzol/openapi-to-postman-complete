@@ -12,10 +12,12 @@ The official converter gives you valid Postman collections. We give you **usable
 Built on top of Postman's official `openapi-to-postmanv2` converter, adding:
 
 - **Endpoint filtering** - Keep only what you need
+- **Resource organization** - Nested folders by REST hierarchy
 - **Rich descriptions** - Human-friendly documentation
 - **Real examples** - Actual request/response data
-- **Environment variables** - Dynamic, reusable collections
+- **Path variables** - Automatic environment variable mapping
 - **Auto-generated tests** - Validation out of the box
+- **ID preservation** - Maintain bookmarks across regenerations
 
 ## Installation
 
@@ -73,6 +75,11 @@ filter:
     POST /pets: true
     GET /pets/:id: true
 
+organize:
+  enabled: true
+  strategy: resources
+  nestingLevel: 2
+
 descriptions:
   collection:
     Pet Store API:
@@ -90,11 +97,16 @@ examples:
           name: Buddy
 
 variables:
-  path:
-    id: '{{petId}}'
   environment:
     baseUrl: https://api.petstore.com
     petId: '1'
+
+pathVariables:
+  enabled: true
+  mapping:
+    id:
+      reference: '{{petId}}'
+      description: Pet ID
 
 tests:
   auto: true
@@ -105,22 +117,32 @@ See [examples](./examples) for more.
 ## Programmatic Usage
 
 ```typescript
-import { enrichCollection } from '@openapi-to-postman-complete/core';
+import { enrichCollection } from '@postman-enricher/core';
 
 const collection = JSON.parse(readFileSync('collection.json', 'utf8'));
 
-const enriched = enrichCollection(collection, {
-  variables: {
-    environment: { baseUrl: 'https://api.example.com' },
+const enriched = enrichCollection(
+  collection,
+  {
+    organize: { enabled: true, strategy: 'resources' },
+    pathVariables: {
+      enabled: true,
+      mapping: { id: { reference: '{{petId}}' } },
+    },
+    tests: { auto: true },
   },
-  tests: { auto: true },
-});
+  './existing-collection.json' // Optional: preserves IDs
+);
 ```
 
-Or load from YAML:
+Or load config from YAML:
 
 ```typescript
-const enriched = enrichCollection(collection, './config.yaml');
+const enriched = enrichCollection(
+  collection,
+  './config.yaml',
+  './existing-collection.json'
+);
 ```
 
 ## License
