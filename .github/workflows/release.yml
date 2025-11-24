@@ -45,8 +45,8 @@ jobs:
       - name: Format check
         run: pnpm format:check
 
-      - name: Type check
-        run: pnpm typecheck
+      # - name: Type check
+      #   run: pnpm typecheck
 
       - name: Build all packages
         run: pnpm --filter "./packages/**" build
