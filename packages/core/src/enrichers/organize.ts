@@ -58,6 +58,7 @@ function buildResourceHierarchy(
   maxDepth: number
 ): PostmanItem[] {
   const folderMap = new Map<string, PostmanItem>();
+  const topLevelFolders = new Set<string>();
 
   items.forEach((item) => {
     if (!isRequest(item) || !item.request?.url) return;
@@ -83,6 +84,9 @@ function buildResourceHierarchy(
 
         if (parentFolder) {
           parentFolder.item!.push(folder);
+        } else {
+          // This is a top-level folder
+          topLevelFolders.add(folderPath);
         }
       }
 
@@ -96,9 +100,7 @@ function buildResourceHierarchy(
   });
 
   // Return only top-level folders
-  return Array.from(folderMap.values()).filter(
-    (folder) => !folder.name.includes('/')
-  );
+  return Array.from(topLevelFolders).map((path) => folderMap.get(path)!);
 }
 
 function extractSegments(path: string, excludePathParams: boolean): string[] {
