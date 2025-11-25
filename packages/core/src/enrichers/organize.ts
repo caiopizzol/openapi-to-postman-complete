@@ -20,8 +20,11 @@ export function organizeByResources(
   const excludePathParams = config.excludePathParams ?? true;
   const maxDepth = config.nestingLevel || Infinity;
 
+  // First, flatten all requests from existing structure
+  const flatRequests = flattenRequests(collection.item);
+
   const organized = buildResourceHierarchy(
-    collection.item,
+    flatRequests,
     excludePathParams,
     maxDepth
   );
@@ -30,6 +33,23 @@ export function organizeByResources(
     ...collection,
     item: organized.length > 0 ? organized : collection.item,
   };
+}
+
+/**
+ * Recursively flatten all requests from a potentially nested structure
+ */
+function flattenRequests(items: PostmanItem[]): PostmanItem[] {
+  const requests: PostmanItem[] = [];
+
+  for (const item of items) {
+    if (isRequest(item)) {
+      requests.push(item);
+    } else if (item.item) {
+      requests.push(...flattenRequests(item.item));
+    }
+  }
+
+  return requests;
 }
 
 function buildResourceHierarchy(
