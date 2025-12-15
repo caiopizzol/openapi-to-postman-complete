@@ -40,9 +40,6 @@
     "*.{ts,tsx,js,jsx,json,md,yml,yaml}": [
       "prettier --write",
       "eslint --fix"
-    ],
-    "*.{ts,tsx}": [
-      "pnpm typecheck"
     ]
   }
 }

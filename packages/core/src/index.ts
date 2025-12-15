@@ -38,11 +38,6 @@ export function enrichCollection(
 
   let enriched = { ...collection };
 
-  // 0. Preserve IDs from existing collection (if provided)
-  if (existingCollectionPath) {
-    enriched = preserveIds(enriched, existingCollectionPath);
-  }
-
   // 1. Filter endpoints first (reduce what we're working with)
   if (enrichmentConfig.filter) {
     enriched = filterEndpoints(enriched, enrichmentConfig.filter);
@@ -76,6 +71,12 @@ export function enrichCollection(
   // 7. Add test scripts
   if (enrichmentConfig.tests) {
     enriched = addTests(enriched, enrichmentConfig.tests);
+  }
+
+  // 8. Preserve IDs from existing collection (if provided) - run LAST
+  // This must run after all enrichers so it can match the final folder structure
+  if (existingCollectionPath) {
+    enriched = preserveIds(enriched, existingCollectionPath);
   }
 
   return enriched;
