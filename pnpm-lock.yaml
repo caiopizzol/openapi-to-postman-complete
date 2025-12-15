@@ -36,10 +36,10 @@ importers:
   packages/cli:
     dependencies:
       '@postman-enricher/core':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../core
       '@postman-enricher/shared':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../shared
       openapi-to-postmanv2:
         specifier: ^5.5.0
@@ -79,7 +79,7 @@ importers:
   packages/core:
     dependencies:
       '@postman-enricher/shared':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../shared
       openapi-to-postmanv2:
         specifier: ^5.5.0
