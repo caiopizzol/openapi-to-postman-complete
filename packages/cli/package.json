@@ -33,8 +33,8 @@
     "prepublish": "pnpm build"
   },
   "dependencies": {
-    "@postman-enricher/core": "workspace:*",
-    "@postman-enricher/shared": "workspace:*",
+    "@postman-enricher/core": "workspace:^",
+    "@postman-enricher/shared": "workspace:^",
     "openapi-to-postmanv2": "^5.5.0"
   },
   "devDependencies": {

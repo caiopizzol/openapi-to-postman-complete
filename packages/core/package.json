@@ -19,7 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@postman-enricher/shared": "workspace:*",
+    "@postman-enricher/shared": "workspace:^",
     "openapi-to-postmanv2": "^5.5.0",
     "yaml": "^2.8.1"
   },
