@@ -1,5 +1,5 @@
 /**
- * ID Preservation - Maintains IDs across collection regenerations
+ * Preservation - Maintains IDs and request bodies across collection regenerations
  */
 
 import type { PostmanCollection, PostmanItem } from '@postman-enricher/shared';
@@ -24,18 +24,27 @@ export function preserveIds(
     ) as PostmanCollection;
     const idMap = buildIdMap(existing);
     const responseIdMap = buildResponseIdMap(existing);
+    const requestBodyMap = buildRequestBodyMap(existing);
 
     // Restore collection ID
     if (existing.info?._postman_id) {
       collection.info._postman_id = existing.info._postman_id;
     }
 
-    // Restore item IDs and response IDs
+    // Restore item IDs, response IDs, and request bodies
     walkCollection(collection.item, (item) => {
       const key = getItemKey(item);
       const existingId = idMap.get(key);
       if (existingId) {
         item.id = existingId;
+      }
+
+      // Restore request body
+      if (isRequest(item) && item.request?.body) {
+        const existingBody = requestBodyMap.get(key);
+        if (existingBody) {
+          item.request.body.raw = existingBody;
+        }
       }
 
       // Restore response IDs
@@ -87,6 +96,21 @@ function buildResponseIdMap(
           map.set(responseKey, response.id);
         }
       }
+    }
+  });
+
+  return map;
+}
+
+function buildRequestBodyMap(
+  collection: PostmanCollection
+): Map<string, string> {
+  const map = new Map<string, string>();
+
+  walkCollection(collection.item, (item) => {
+    if (isRequest(item) && item.request?.body?.raw) {
+      const key = getItemKey(item);
+      map.set(key, item.request.body.raw);
     }
   });
 
