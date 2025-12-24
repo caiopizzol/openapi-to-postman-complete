@@ -2,7 +2,11 @@
  * Preservation - Maintains IDs and request bodies across collection regenerations
  */
 
-import type { PostmanCollection, PostmanItem } from '@postman-enricher/shared';
+import type {
+  PostmanCollection,
+  PostmanItem,
+  PostmanResponse,
+} from '@postman-enricher/shared';
 import {
   walkCollection,
   isRequest,
@@ -23,7 +27,7 @@ export function preserveIds(
       readFileSync(existingPath, 'utf8')
     ) as PostmanCollection;
     const idMap = buildIdMap(existing);
-    const responseIdMap = buildResponseIdMap(existing);
+    const responseMap = buildResponseMap(existing);
     const requestBodyMap = buildRequestBodyMap(existing);
 
     // Restore collection ID
@@ -31,7 +35,7 @@ export function preserveIds(
       collection.info._postman_id = existing.info._postman_id;
     }
 
-    // Restore item IDs, response IDs, and request bodies
+    // Restore item IDs, response IDs/bodies, and request bodies
     walkCollection(collection.item, (item) => {
       const key = getItemKey(item);
       const existingId = idMap.get(key);
@@ -47,14 +51,11 @@ export function preserveIds(
         }
       }
 
-      // Restore response IDs
+      // Restore responses from existing collection
       if (isRequest(item) && item.response) {
-        for (const response of item.response) {
-          const responseKey = getResponseKey(key, response.name, response.code);
-          const existingResponseId = responseIdMap.get(responseKey);
-          if (existingResponseId) {
-            response.id = existingResponseId;
-          }
+        const existingResponses = responseMap.get(key);
+        if (existingResponses) {
+          item.response = existingResponses;
         }
       }
     });
@@ -78,24 +79,15 @@ function buildIdMap(collection: PostmanCollection): Map<string, string> {
   return map;
 }
 
-function buildResponseIdMap(
+function buildResponseMap(
   collection: PostmanCollection
-): Map<string, string> {
-  const map = new Map<string, string>();
+): Map<string, PostmanResponse[]> {
+  const map = new Map<string, PostmanResponse[]>();
 
   walkCollection(collection.item, (item) => {
-    if (isRequest(item) && item.response) {
-      const itemKey = getItemKey(item);
-      for (const response of item.response) {
-        if (response.id) {
-          const responseKey = getResponseKey(
-            itemKey,
-            response.name,
-            response.code
-          );
-          map.set(responseKey, response.id);
-        }
-      }
+    if (isRequest(item) && item.response && item.response.length > 0) {
+      const key = getItemKey(item);
+      map.set(key, item.response);
     }
   });
 
@@ -123,12 +115,4 @@ function getItemKey(item: PostmanItem): string {
     return `${method}_${item.name}`;
   }
   return `folder_${item.name}`;
-}
-
-function getResponseKey(
-  itemKey: string,
-  responseName: string,
-  statusCode: number
-): string {
-  return `${itemKey}_${responseName}_${statusCode}`;
 }
