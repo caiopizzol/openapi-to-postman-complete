@@ -85,7 +85,7 @@ export interface PostmanEvent {
 
 export interface PostmanInfo {
   name: string;
-  description?: string;
+  description?: string | { content: string; type: string };
   schema: string;
   _postman_id?: string;
 }

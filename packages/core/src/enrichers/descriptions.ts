@@ -37,7 +37,10 @@ export function addDescriptions(
         collection.info.name = collectionConfig.name;
       }
       if (collectionConfig.description) {
-        collection.info.description = collectionConfig.description;
+        collection.info.description = {
+          content: collectionConfig.description,
+          type: 'text/markdown',
+        };
       }
     }
   }
