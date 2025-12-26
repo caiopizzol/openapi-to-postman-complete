@@ -28,7 +28,7 @@ export function addDescriptions(
   // 1. Update collection-level info
   if (config.collection) {
     const collectionKey = Object.keys(config.collection).find((key) =>
-      collection.info.name.includes(key)
+      collection.info.name.toLowerCase().includes(key.toLowerCase())
     );
 
     if (collectionKey) {
