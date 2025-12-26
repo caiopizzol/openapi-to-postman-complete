@@ -1,6 +1,6 @@
 {
   "name": "@postman-enricher/core",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "Core enrichment logic for Postman Enricher",
   "type": "module",
   "main": "./dist/index.js",
