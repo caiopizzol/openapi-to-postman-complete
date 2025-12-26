@@ -6,12 +6,7 @@ import type {
   PostmanCollection,
   DescriptionConfig,
 } from '@postman-enricher/shared';
-import {
-  walkCollection,
-  isFolder,
-  isRequest,
-  getRequestMethod,
-} from '@postman-enricher/shared';
+import { walkCollection, isFolder, isRequest } from '@postman-enricher/shared';
 
 /**
  * Add descriptions to collection, folders, and requests
@@ -74,54 +69,37 @@ export function addDescriptions(
     });
   }
 
-  // 3. Add request descriptions
-  if (config.requests) {
-    walkCollection(collection.item, (item) => {
-      if (isRequest(item) && item.request) {
-        const requestName = item.name;
+  // 3. Add request descriptions (always run to fill empty descriptions)
+  walkCollection(collection.item, (item) => {
+    if (isRequest(item) && item.request) {
+      const requestName = item.name;
+      const existingDesc = item.request.description;
+      const existingContent =
+        typeof existingDesc === 'object' ? existingDesc?.content : existingDesc;
 
-        if (config.requests && config.requests[requestName]) {
-          item.request.description = config.requests[requestName];
-        } else {
-          // Generate generic description if not specified
-          item.request.description = generateGenericDescription(
-            getRequestMethod(item),
-            requestName
-          );
-        }
+      // Check if config has a custom description for this request
+      if (config?.requests && config.requests[requestName]) {
+        item.request.description = {
+          content: config.requests[requestName],
+          type: 'text/markdown',
+        };
       }
-    });
-  }
+      // Fill empty descriptions with the request name (which is usually descriptive from OpenAPI summary)
+      else if (!existingContent || existingContent.trim() === '') {
+        item.request.description = {
+          content: requestName,
+          type: 'text/markdown',
+        };
+      }
+      // Convert existing string descriptions to object format
+      else if (typeof existingDesc === 'string') {
+        item.request.description = {
+          content: existingDesc,
+          type: 'text/markdown',
+        };
+      }
+    }
+  });
 
   return collection;
-}
-
-/**
- * Generate a description based on HTTP method and name
- * @param method - HTTP method
- * @param name - Request name
- * @returns Generated description
- */
-function generateGenericDescription(method: string, name: string): string {
-  const descriptions: Record<string, string> = {
-    GET: `Retrieve ${name
-      .toLowerCase()
-      .replace(/^get\s+/, '')
-      .replace(/^list\s+/, '')}`,
-    POST: `Create new ${name
-      .toLowerCase()
-      .replace(/^create\s+/, '')
-      .replace(/^add\s+/, '')}`,
-    PUT: `Update ${name.toLowerCase().replace(/^update\s+/, '')}`,
-    PATCH: `Partially update ${name.toLowerCase().replace(/^update\s+/, '')}`,
-    DELETE: `Delete ${name
-      .toLowerCase()
-      .replace(/^delete\s+/, '')
-      .replace(/^remove\s+/, '')}`,
-  };
-
-  return (
-    descriptions[method] ||
-    `Perform ${method} operation on ${name.toLowerCase()}`
-  );
 }

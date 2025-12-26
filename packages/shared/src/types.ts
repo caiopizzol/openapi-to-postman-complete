@@ -46,7 +46,7 @@ export interface PostmanBody {
 
 export interface PostmanRequest {
   name: string;
-  description?: string;
+  description?: string | { content: string; type: string };
   url: PostmanUrl;
   method: string;
   header?: PostmanHeader[];
