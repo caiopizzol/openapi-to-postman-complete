@@ -50,17 +50,25 @@ export function addDescriptions(
     walkCollection(collection.item, (item) => {
       if (isFolder(item)) {
         const folderKey = item.name?.toLowerCase();
+        let descriptionText: string | undefined;
 
         // Try exact match first
         if (config.folders && config.folders[folderKey]) {
-          item.description = config.folders[folderKey];
+          descriptionText = config.folders[folderKey];
         }
         // Try without special characters
         else {
           const cleanKey = folderKey?.replace(/[{}:]/g, '');
           if (config.folders && cleanKey && config.folders[cleanKey]) {
-            item.description = config.folders[cleanKey];
+            descriptionText = config.folders[cleanKey];
           }
+        }
+
+        if (descriptionText) {
+          item.description = {
+            content: descriptionText,
+            type: 'text/markdown',
+          };
         }
       }
     });

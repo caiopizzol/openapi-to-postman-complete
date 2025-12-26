@@ -68,7 +68,7 @@ export interface PostmanResponse {
 export interface PostmanItem {
   id?: string;
   name: string;
-  description?: string;
+  description?: string | { content: string; type: string };
   item?: PostmanItem[];
   request?: PostmanRequest;
   response?: PostmanResponse[];
